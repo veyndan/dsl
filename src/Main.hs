@@ -7,20 +7,24 @@ main = do undefined
 
 type Size = (Int, Int)
 
-data View = VerticalLayout [View]
+data Orientation = Horizontal | Vertical
+
+data View = LinearLayout Orientation [View]
           | TextView Size String
 
 width :: View -> Int
-width (VerticalLayout vs) = maximum [width v | v <- vs]
+width (LinearLayout Horizontal vs) = sum [width v | v <- vs]
+width (LinearLayout Vertical vs) = maximum [width v | v <- vs]
 width (TextView (w, _) _) = w
 
 height :: View -> Int
-height (VerticalLayout vs) = sum [height v | v <- vs]
+height (LinearLayout Horizontal vs) = maximum [height v | v <- vs]
+height (LinearLayout Vertical vs) = sum [height v | v <- vs]
 height (TextView (_, h) _) = h
 
 area :: View -> Int
-area v = (width v) * (height v)
+area v = width v * height v
 
 valid :: View -> Bool
-valid (VerticalLayout vs) = and [valid v | v <- vs]
-valid (TextView (w, h) text) = w >= 0 && h >= 0
+valid (LinearLayout _ vs) = and [valid v | v <- vs]
+valid (TextView (w, h) _) = w >= 0 && h >= 0
