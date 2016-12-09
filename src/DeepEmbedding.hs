@@ -1,6 +1,6 @@
 module DeepEmbedding where
 
-test = print (width design == 50 && height design == 65 && area design == 3250 && valid design
+test = print (width design == 50 && height design == 65 && valid design
         && text design == ["Hello world", "It's Veyndan", "Wazaaaa", "The show has finished"])
 
 design :: View
@@ -29,9 +29,6 @@ height :: View -> Int
 height (LinearLayout Horizontal _ vs) = maximum [height v | v <- vs]
 height (LinearLayout Vertical _ vs) = sum [height v | v <- vs]
 height (TextView (_, h) _ _) = h
-
-area :: View -> Int
-area v = width v * height v
 
 valid :: View -> Bool
 valid (LinearLayout _ _ vs) = and [valid v | v <- vs]
