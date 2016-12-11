@@ -24,4 +24,4 @@ linearLayout Vertical _ vs = ((maximum [w | ((w, _), _, _) <- vs], sum [h | ((_,
 linearLayout Horizontal _ vs = ((sum [w | ((w, _), _, _) <- vs], maximum [h | ((_, h), _, _) <- vs]), and [v | (_, v, _) <- vs], concat [t | (_, _, t) <- vs])
 
 textView :: Size -> Background -> String -> View
-textView (w, h) _ t = ((w, h), w >= 0 && h >= 0, [t])
+textView s@(w, h) _ t = (s, w >= 0 && h >= 0, [t])
