@@ -1,19 +1,21 @@
 module DeepEmbedding where
 
-test = print (width design == 50 && height design == 65 && valid design
-        && text design == ["Hello world", "It's Veyndan", "Wazaaaa", "The show has finished"])
+test = print (width design == 200 && height design == 110 && valid design
+        && text design == ["Title", "A long subtitle which wraps on to the next line", "Column A", "Column B"])
 
 design :: View
 design = LinearLayout Vertical [
-             TextView (20, 30) "Hello world",
-             TextView (40, 15) "It's Veyndan",
+             TextView (200, 30) "Title",
+             TextView (170, 50) "A long subtitle which wraps on to the next line",
              LinearLayout Horizontal [
-                 TextView (10, 20) "Wazaaaa",
-                 TextView (40, 15) "The show has finished"
+                 TextView (100, 20) "Column A",
+                 TextView (100, 30) "Column B"
              ]
          ]
 
-type Size = (Int, Int)
+type Width = Int
+type Height = Int
+type Size = (Width, Height)
 data Orientation = Horizontal | Vertical
 
 data View = LinearLayout Orientation [View]
