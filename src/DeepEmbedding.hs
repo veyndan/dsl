@@ -38,3 +38,7 @@ valid (TextView (w, h) _) = w >= 0 && h >= 0
 text :: View -> [String]
 text (LinearLayout _ vs) = concat [text v | v <- vs]
 text (TextView _ t) = [t]
+
+optimized :: View -> Bool
+optimized (LinearLayout _ vs) = length vs > 1 && and [optimized v | v <- vs]
+optimized (TextView _ _) = True

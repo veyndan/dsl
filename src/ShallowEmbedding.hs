@@ -19,12 +19,17 @@ data Orientation = Horizontal | Vertical
 type View = (Size, Bool, [String])
 
 linearLayout :: Orientation -> [View] -> View
-linearLayout Vertical vs =
-    ((maximum [w | ((w, _), _, _) <- vs], sum [h | ((_, h), _, _) <- vs]),
-    and [v | (_, v, _) <- vs], concat [t | (_, _, t) <- vs])
-linearLayout Horizontal vs =
-    ((sum [w | ((w, _), _, _) <- vs], maximum [h | ((_, h), _, _) <- vs]),
-    and [v | (_, v, _) <- vs], concat [t | (_, _, t) <- vs])
+linearLayout o vs =
+    let
+        ws        = [w | ((w, _), _, _) <- vs]
+        hs        = [h | ((_, h), _, _) <- vs]
+        valids    = [v | (_, v, _) <- vs]
+        ts        = [t | (_, _, t) <- vs]
+        size      = case o of Vertical   -> (maximum ws, sum hs)
+                              Horizontal -> (sum ws, maximum hs)
+        valid     = and valids
+        text      = concat ts
+    in (size, valid, text)
 
 textView :: Size -> String -> View
 textView s@(w, h) t = (s, w >= 0 && h >= 0, [t])
